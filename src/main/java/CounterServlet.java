@@ -21,16 +21,16 @@ public class CounterServlet extends HttpServlet {
             counter = 0;
         }
         counter++;
-        PrintWriter writer = response.getWriter();
+        PrintWriter out = response.getWriter();
 
-        writer.println("<!DOCTYPE html>");
-        writer.println("<html>");
-        writer.println("<head>");
-        writer.println("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\">");
-        writer.println("</head>");
-        writer.println("<body>");
-        writer.printf("<h1>You have visited this page %d times</h1>", counter);
-        writer.println("</body>");
-        writer.println("</html>");
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\">");
+        out.println("</head>");
+        out.println("<body>");
+        out.printf("<h1>You have visited this page %d times</h1>", counter);
+        out.println("</body>");
+        out.println("</html>");
     }
 }
