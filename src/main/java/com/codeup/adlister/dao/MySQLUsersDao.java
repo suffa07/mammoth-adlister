@@ -1,6 +1,5 @@
 package com.codeup.adlister.dao;
 
-import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
@@ -58,7 +57,6 @@ public class MySQLUsersDao implements Users {
 
     @Override
     public String insert(User user) {
-        long id;
         String insert = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
         try {
 
@@ -66,14 +64,9 @@ public class MySQLUsersDao implements Users {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getEmail());
             pstmt.setString(3, user.getPassword());
+            pstmt.executeUpdate();
 
-
-            id = pstmt.executeUpdate();
-
-
-            user.setId(id);
-
-            return String.valueOf(id);
+            return user.getUsername();
 
         } catch (SQLException e) {
             throw new RuntimeException("Error creating a new ad.", e);
