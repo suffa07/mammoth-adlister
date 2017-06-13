@@ -41,13 +41,43 @@ public class MySQLUsersDao implements Users {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return null;
+    public User findByUsername(String user) {
+        PreparedStatement stmt;
+        try {
+            String sql = "SELECT username, password FROM users WHERE username = '"+user+"'";
+            stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+           return createUserFromResults(rs);
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving user", e);
+        }
+
     }
 
     @Override
     public String insert(User user) {
-        return null;
+        long id;
+        String insert = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+        try {
+
+            PreparedStatement pstmt = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getEmail());
+            pstmt.setString(3, user.getPassword());
+
+
+            id = pstmt.executeUpdate();
+
+
+            user.setId(id);
+
+            return String.valueOf(id);
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating a new ad.", e);
+        }
     }
 
     private User extractUser(ResultSet rs) throws SQLException {
@@ -66,6 +96,16 @@ public class MySQLUsersDao implements Users {
         }
         return users;
     }
+
+    private User createUserFromResults(ResultSet rs) throws SQLException {
+        User user = new User();
+        while (rs.next()) {
+            user = extractUser(rs);
+        }
+        return user;
+    }
+
+
 }
 
 
