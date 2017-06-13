@@ -28,8 +28,12 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         User user = DaoFactory.getUsersDao().findByUsername(username);
 
+        //Password in Database
+        String userpass = user.getPassword();
+
+        //Check login user password against hashed password in database
         Password pass = new Password();
-        String hash = pass.hash(password);
+
 
 
 
@@ -38,7 +42,8 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        boolean validAttempt = password.equals(user.getPassword());
+//        boolean validAttempt = password.equals(user.getPassword());
+        boolean validAttempt = pass.check(password, userpass);
 
         if (validAttempt) {
             request.getSession().setAttribute("user", user);
