@@ -35,8 +35,6 @@ public class LoginServlet extends HttpServlet {
         Password pass = new Password();
 
 
-
-
         if (user == null) {
             response.sendRedirect("/login");
             return;
@@ -49,7 +47,10 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("user", user);
             response.sendRedirect("/profile");
         } else {
-            response.sendRedirect("/login");
+            request.setAttribute("error", "Either your username or password are incorrect");
+            request.getRequestDispatcher("/ogin");
+//            request.getRequestDispatcher("/WEB-INF/login.jsp");
+//            response.sendRedirect("/login");
         }
     }
 }
